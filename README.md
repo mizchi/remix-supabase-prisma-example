@@ -1,52 +1,41 @@
 # Remix + CloudflarePages + Supabase + Prisma Accelarate
 
-## Deploy
-
-Set your `DATABASE_URL` for Cloudflare Pages
-
-```bash
-pnpm release
-```
-
----
-
-# Welcome to Remix!
-
-- 📖 [Remix docs](https://remix.run/docs)
 
 ## Development
 
-Run the dev server:
+- Create supabase database and get connection url.
+- Put `.dev.vars` like below.
 
-```shellscript
-npm run dev
 ```
+DATABASE_URL="..."
+```
+
+develop and deploy
+
+- `pnpm dev` - Start dev server (node): it uses `@prisma/adapter-pg`
+- `pnpm release` - Release to production(workerd): it uses `@prisma/adapter-pg-worker`
+
+These tasks replaces `functions/[[path]].ts` from `functions-src/{dev,prod}.ts` before run. Beasuce we do not have the way of tree-shake for `functions/` and can not use `@prisma/adapter-pg` on node develoment.
+
+If you want to fix context, edit `load-context.[env].ts`.
 
 ## Deployment
 
-First, build your app for production:
+- Edit `wrangler.toml`'s `name` by your own.
+- Set `DATABASE_URL` for your Cloudflare Pages Env.
 
 ```sh
-npm run build
+pnpm release
 ```
 
-Then run the app in production mode:
 
-```sh
-npm start
-```
+## LICENSE
 
-Now you'll need to pick a host to deploy it to.
+Copyright <2024> <COPYRIGHT miz404@gmail.com>
 
-### DIY
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-Make sure to deploy the output of `npm run build`
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
