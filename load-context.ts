@@ -1,7 +1,16 @@
 import { type PlatformProxy } from "wrangler";
 import { type AppLoadContext } from "@remix-run/cloudflare";
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
+
+// edge
+// import { PrismaClient } from "@prisma/client/edge";
+// import { withAccelerate } from "@prisma/extension-accelerate";
+
+// pg
+/// https://www.prisma.io/docs/orm/prisma-client/deployment/edge/deploy-to-cloudflare#postgresql-traditional
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg-worker";
+import { Pool } from "@prisma/pg-worker";
+// import PG from "pg";
 
 type Cloudflare = Omit<PlatformProxy<Env>, "dispose">;
 
@@ -20,16 +29,13 @@ type GetLoadContext = (args: {
 }) => Promise<AppLoadContext>;
 
 export const getLoadContext: GetLoadContext = async ({ context }) => {
-  const db = new PrismaClient({
-    datasources: {
-      db: {
-        url: context.cloudflare.env.DATABASE_URL,
-      },
-    },
-  }).$extends(withAccelerate());
+  const pool = new Pool({
+    connectionString: context.cloudflare.env.DATABASE_URL,
+  });
+  const adapter = new PrismaPg(pool);
+  const db = new PrismaClient({ adapter });
   return {
     cloudflare: context.cloudflare,
-    // TODO: FIX TYPE
-    db: db as unknown as PrismaClient,
+    db,
   };
 };

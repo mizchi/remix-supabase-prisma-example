@@ -12,21 +12,28 @@
     "migrate": "dotenv -e .dev.vars -- prisma migrate dev"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^5.19.0",
+    "@prisma/adapter-pg-worker": "^5.19.0",
     "@prisma/extension-accelerate": "^1.1.0",
+    "@prisma/pg-worker": "^5.19.0",
     "@remix-run/cloudflare": "^2.11.2",
     "@remix-run/cloudflare-pages": "^2.11.2",
     "@remix-run/node": "^2.11.2",
     "@remix-run/react": "^2.11.2",
     "@remix-run/serve": "^2.11.2",
     "isbot": "^4.1.0",
+    "pg": "^8.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240821.1",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@prisma/client": "^5.18.0",
     "@remix-run/dev": "^2.11.2",
     "@supabase/supabase-js": "^2.45.2",
+    "@types/pg": "^8.11.7",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -44,6 +51,7 @@
     "tailwindcss": "^3.4.4",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "vite-tsconfig-paths": "^4.2.1",
     "wrangler": "^3.72.2"
   },
