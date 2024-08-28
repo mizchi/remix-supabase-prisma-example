@@ -7,7 +7,9 @@
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "preview": "pnpm build && wrangler pages dev",
-    "typecheck": "tsc"
+    "release": "pnpm build && wrangler pages deploy",
+    "typecheck": "tsc",
+    "migrate": "dotenv -e .dev.vars -- prisma migrate dev"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^1.1.0",
@@ -30,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "autoprefixer": "^10.4.19",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.38.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",

@@ -1,6 +1,5 @@
 import { type PlatformProxy } from "wrangler";
 import { type AppLoadContext } from "@remix-run/cloudflare";
-// import { type AppLoadContext } from '@remix-run/cloudflare'
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
@@ -17,7 +16,7 @@ type GetLoadContext = (args: {
   request: Request;
   context: {
     cloudflare: Cloudflare;
-  }; // load context _before_ augmentation
+  };
 }) => Promise<AppLoadContext>;
 
 export const getLoadContext: GetLoadContext = async ({ context }) => {

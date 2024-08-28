@@ -1,3 +1,15 @@
+# Remix + CloudflarePages + Supabase + Prisma Accelarate
+
+## Deploy
+
+Set your `DATABASE_URL` for Cloudflare Pages
+
+```bash
+pnpm release
+```
+
+---
+
 # Welcome to Remix!
 
 - 📖 [Remix docs](https://remix.run/docs)
