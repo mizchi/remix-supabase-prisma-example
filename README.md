@@ -1,33 +1,38 @@
-# Remix + CloudflarePages + Supabase + Prisma Accelarate
+# Remix + CloudflarePages + Supabase
 
-
-## Development
+## Setup
 
 - Create supabase database and get connection url.
 - Put `.dev.vars` like below.
 
 ```
-DATABASE_URL="..."
+DIRECT_URL="postgresql://postgres.[your-db-id]:[your-db-password]@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://postgres.[your-db-id]:[your-db-password]@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 ```
 
-develop and deploy
+NOTICE: Add `?pgbouncer=true` to use connection pools.
+
+## Develop
 
 - `pnpm dev` - Start dev server (node): it uses `@prisma/adapter-pg`
-- `pnpm release` - Release to production(workerd): it uses `@prisma/adapter-pg-worker`
+- `pnpm build` - Build for cloudflare workerd: it uses `@prisma/adapter-pg`
+- `pnpm release` - Release to production(workerd) with `pnpm build` assets.
 
 These tasks replaces `functions/[[path]].ts` from `functions-src/{dev,prod}.ts` before run. Beasuce we do not have the way of tree-shake for `functions/` and can not use `@prisma/adapter-pg` on node develoment.
 
 If you want to fix context, edit `load-context.[env].ts`.
 
-## Deployment
+## Deploy
 
-- Edit `wrangler.toml`'s `name` by your own.
+- Run db migration
+- Edit `wrangler.toml`'s `name` by your own cloudflare pages project.
 - Set `DATABASE_URL` for your Cloudflare Pages Env.
+
+Run command
 
 ```sh
 pnpm release
 ```
-
 
 ## LICENSE
 
